@@ -11,9 +11,45 @@
             box-sizing: border-box;
         }
 
+        :root {
+            /* ===== New Theme: High Contrast Slate (Eye Comfortable) ===== */
+            /* Background: Deep, solid slate colors instead of pitch black */
+            --bg-start: #0f172a;  /* Slate 900 */
+            --bg-mid:   #1e293b;  /* Slate 800 */
+            --bg-end:   #0f172a;  /* Slate 900 */
+
+            /* Text: High brightness for readability */
+            --text:   #f1f5f9;    /* Slate 100 - Very clear white/gray */
+            --muted:  #cbd5e1;    /* Slate 300 - Readable secondary text */
+
+            /* Accents: Calming Blue & Cyan (Easier on eyes than Red/Pink) */
+            --accent:   #3b82f6;  /* Blue 500 */
+            --accent-2: #0ea5e9;  /* Sky 500 */
+            --accent-rgb: 59, 130, 246;
+            --ring: rgba(59, 130, 246, 0.4);
+
+            /* Cards: Solid colors to prevent background noise interference */
+            --card-bg: #1e293b;   /* Slate 800 */
+            --card-hover-bg: #253045; /* Slightly lighter slate */
+
+            /* Inputs: Distinct background color for typing areas */
+            --input-bg: #334155;  /* Slate 700 */
+            --input-border: #475569; /* Slate 600 */
+
+            /* Status Colors: Softened but clear */
+            --status-open-bg: rgba(239, 68, 68, 0.2);
+            --status-open-border: #ef4444;
+
+            --status-progress-bg: rgba(245, 158, 11, 0.2);
+            --status-progress-border: #f59e0b;
+
+            --status-resolved-bg: rgba(16, 185, 129, 0.2);
+            --status-resolved-border: #10b981;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-mid) 50%, var(--bg-end) 100%);
+            background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-mid) 50%, var(--bg-end) 100%);
             color: var(--text);
             min-height: 100vh;
             line-height: 1.6;
@@ -28,15 +64,15 @@
         /* Header Section */
         .header {
             text-align: center;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
+            background: var(--card-bg);
+            /* Reduced blur, increased opacity for readability */
             border-radius: 20px;
-            border: 2px solid transparent;
-            background-clip: padding-box;
+            border: 1px solid var(--input-border);
             position: relative;
             padding: 40px;
             margin-bottom: 40px;
             overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
 
         .header::before {
@@ -45,29 +81,16 @@
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, var(--accent), var(--accent-2), var(--accent));
-            background-size: 400% 400%;
-            animation: gradientShift 8s ease infinite;
-            z-index: -1;
-            margin: -2px;
-            border-radius: 20px;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            height: 4px; /* Changed to a top bar instead of full background glow for clarity */
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            z-index: 1;
         }
 
         .header h1 {
             font-size: 3rem;
             margin-bottom: 15px;
-            background: linear-gradient(45deg, var(--accent), var(--accent-2));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 14px var(--ring);
+            color: #ffffff; /* Pure white title */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .header p {
@@ -78,22 +101,22 @@
 
         .incident-id-display {
             display: inline-block;
-            background: rgba(var(--accent-rgb), 0.14);
-            color: var(--accent);
+            background: rgba(var(--accent-rgb), 0.15);
+            color: #60a5fa; /* Lighter blue for better contrast */
             padding: 10px 20px;
             border-radius: 25px;
             font-weight: bold;
             font-size: 1.1rem;
-            border: 1px solid rgba(var(--accent-rgb), 0.28);
+            border: 1px solid rgba(var(--accent-rgb), 0.3);
         }
 
         /* Progress Bar */
         .progress-container {
             margin: 30px 0;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--card-bg);
             border-radius: 15px;
             padding: 20px;
-            backdrop-filter: blur(10px);
+            border: 1px solid var(--input-border);
         }
 
         .progress-bar {
@@ -115,27 +138,28 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
+            background: #0f172a; /* Darker background for inactive steps */
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
             margin-bottom: 10px;
             transition: all 0.3s ease;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid var(--input-border);
+            color: var(--muted);
         }
 
         .step-circle.active {
-            background: linear-gradient(45deg, var(--accent), var(--accent-2));
-            border-color: var(--accent);
-            color: #000;
-            box-shadow: 0 0 12px var(--ring);
+            background: var(--accent);
+            border-color: var(--accent-2);
+            color: #ffffff;
+            box-shadow: 0 0 15px var(--ring);
         }
 
         .step-circle.completed {
-            background: var(--accent);
+            background: var(--card-bg);
             border-color: var(--accent);
-            color: #000;
+            color: var(--accent);
         }
 
         .step-label {
@@ -146,37 +170,20 @@
 
         /* Form Sections */
         .form-section {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
+            background: var(--card-bg);
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--input-border);
             padding: 35px;
             margin-bottom: 30px;
             transition: all 0.3s ease;
             position: relative;
-            overflow: visible;
-        }
-
-        .form-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent));
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .form-section:hover::before {
-            transform: scaleX(1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         .form-section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+            background: var(--card-hover-bg);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
         .section-header {
@@ -185,20 +192,20 @@
             gap: 15px;
             margin-bottom: 25px;
             padding-bottom: 15px;
-            border-bottom: 1px solid rgba(var(--accent-rgb), 0.18);
+            border-bottom: 1px solid var(--input-border);
         }
 
         .section-icon {
             font-size: 2rem;
             padding: 15px;
-            background: rgba(0, 255, 136, 0.2);
+            background: rgba(var(--accent-rgb), 0.1);
             border-radius: 15px;
-            border: 1px solid rgba(0, 255, 136, 0.3);
+            border: 1px solid rgba(var(--accent-rgb), 0.2);
         }
 
         .section-title {
             font-size: 1.8rem;
-            color: var(--accent);
+            color: #ffffff; /* Pure white for titles */
             margin: 0;
         }
 
@@ -217,30 +224,31 @@
             display: block;
             margin-bottom: 8px;
             color: var(--muted);
-            font-weight: 500;
+            font-weight: 600; /* Bolder label */
             font-size: 1rem;
         }
 
+        /* UPDATED INPUT STYLES FOR READABILITY */
         .form-input {
             width: 100%;
             padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: var(--input-bg); /* Lighter slate background */
+            border: 2px solid var(--input-border);
             border-radius: 10px;
-            color: var(--text);
+            color: #ffffff; /* White text */
             font-size: 1rem;
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
         }
 
         .form-input::placeholder {
-            color: var(--muted);
+            color: #94a3b8; /* Clearly visible placeholder */
         }
 
         .form-input:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 20px var(--ring);
+            background: #1e293b; /* Darkens slightly on focus */
+            box-shadow: 0 0 0 3px var(--ring);
         }
 
         .form-textarea {
@@ -249,24 +257,16 @@
         }
 
         .form-select {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23f1f5f9' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
             background-position: right 12px center;
             background-repeat: no-repeat;
             background-size: 16px;
             appearance: none;
         }
-        
-        /* Ensure select dropdown options are visible on Windows */
-        select.form-select option {
-            color: #111;
-            background: #fff;
-        }
 
-        /* Prevent pseudo-elements from intercepting clicks */
-        .header::before,
-        .form-section::before,
-        .btn::before {
-            pointer-events: none;
+        select.form-select option {
+            color: #fff;
+            background: var(--bg-mid);
         }
 
         /* Severity Selection */
@@ -291,27 +291,28 @@
             padding: 20px;
             text-align: center;
             border-radius: 15px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid var(--input-border);
             cursor: pointer;
             transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--input-bg);
+            color: var(--text);
         }
 
         .severity-label:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+            background: var(--card-hover-bg);
         }
 
-        .severity-low .severity-label { border-color: rgba(76, 175, 80, 0.5); }
-        .severity-medium .severity-label { border-color: rgba(255, 193, 7, 0.5); }
-        .severity-high .severity-label { border-color: rgba(255, 152, 0, 0.5); }
-        .severity-critical .severity-label { border-color: rgba(244, 67, 54, 0.5); }
+        .severity-low .severity-label { border-left: 5px solid #34d399; }
+        .severity-medium .severity-label { border-left: 5px solid #fbbf24; }
+        .severity-high .severity-label { border-left: 5px solid #fb923c; }
+        .severity-critical .severity-label { border-left: 5px solid #f87171; }
 
         .severity-option input:checked + .severity-label {
-            background: rgba(var(--accent-rgb), 0.14);
+            background: rgba(var(--accent-rgb), 0.15);
             border-color: var(--accent);
-            color: var(--accent);
-            box-shadow: 0 0 25px var(--ring);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         /* Status Timeline */
@@ -320,8 +321,9 @@
             justify-content: space-around;
             margin: 25px 0;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--input-bg);
             border-radius: 15px;
+            border: 1px solid var(--input-border);
         }
 
         .status-item {
@@ -332,32 +334,20 @@
             transition: all 0.3s ease;
             flex: 1;
             margin: 0 5px;
-            position: relative;
+            color: var(--text);
         }
 
         .status-item:hover {
-            transform: translateY(-3px);
+            background: rgba(255,255,255,0.05);
         }
 
-        .status-open {
-            background: rgba(244, 67, 54, 0.2);
-            border: 1px solid rgba(244, 67, 54, 0.3);
-        }
-
-        .status-progress {
-            background: rgba(255, 193, 7, 0.2);
-            border: 1px solid rgba(255, 193, 7, 0.3);
-        }
-
-        .status-resolved {
-            background: rgba(76, 175, 80, 0.2);
-            border: 1px solid rgba(76, 175, 80, 0.3);
-        }
+        .status-open { color: #fca5a5; }
+        .status-progress { color: #fcd34d; }
+        .status-resolved { color: #6ee7b7; }
 
         .status-item.selected {
-            background: rgba(var(--accent-rgb), 0.14);
-            border-color: var(--accent);
-            box-shadow: 0 0 20px var(--ring);
+            background: var(--bg-start);
+            box-shadow: inset 0 0 0 2px var(--accent);
         }
 
         /* Action Buttons */
@@ -380,67 +370,49 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s;
-        }
-
-        .btn:hover::before {
-            left: 100%;
+            color: #ffffff;
         }
 
         .btn-primary {
-            background: linear-gradient(45deg, var(--accent), var(--accent-2));
-            color: #000;
+            background: var(--accent);
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 24px var(--ring);
+            background: #2563eb;
+            transform: translateY(-2px);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text);
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
+            background: var(--card-hover-bg);
             border-color: var(--accent);
+            transform: translateY(-2px);
         }
 
         .btn-danger {
-            background: linear-gradient(45deg, #ff4757, #ff6b8a);
+            background: #ef4444;
             color: #ffffff;
         }
 
         .btn-danger:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(255, 71, 87, 0.4);
+            background: #dc2626;
+            transform: translateY(-2px);
         }
 
         /* Summary Card */
         .summary-card {
-            background: rgba(var(--accent-rgb), 0.10);
-            border: 1px solid rgba(var(--accent-rgb), 0.25);
+            background: var(--card-bg);
+            border: 1px solid var(--accent);
             border-radius: 20px;
             padding: 30px;
             margin-top: 30px;
-            backdrop-filter: blur(20px);
             display: none;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
         .summary-card.show {
@@ -449,14 +421,8 @@
         }
 
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .summary-header {
@@ -465,80 +431,46 @@
             gap: 15px;
             margin-bottom: 25px;
             padding-bottom: 15px;
-            border-bottom: 1px solid rgba(var(--accent-rgb), 0.18);
+            border-bottom: 1px solid var(--input-border);
         }
 
         .summary-title {
             font-size: 1.8rem;
-            color: var(--accent);
+            color: var(--accent-2);
         }
 
         .summary-content {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--bg-start);
             padding: 20px;
             border-radius: 12px;
             white-space: pre-line;
+            border: 1px solid var(--input-border);
+            font-family: monospace;
+            color: var(--text);
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .severity-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .action-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .progress-bar {
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-            
-            .status-timeline {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-
-        /* ===== Theme override palette (Neutral Blue/Slate) ===== */
-        :root {
-            --bg-start: #0f172a; /* slate-900 */
-            --bg-mid: #111827;  /* gray-900 */
-            --bg-end: #0b1220;  /* dark navy */
-            --text: #e5e7eb;    /* slate-200 */
-            --muted: #94a3b8;   /* slate-400 */
-            --accent: #3b82f6;  /* blue-500 */
-            --accent-2: #22d3ee;/* cyan-400 */
-            --accent-rgb: 59, 130, 246;
-            --ring: rgba(59, 130, 246, 0.22);
+            .container { padding: 15px; }
+            .header h1 { font-size: 2rem; }
+            .form-grid { grid-template-columns: 1fr; }
+            .severity-grid { grid-template-columns: repeat(2, 1fr); }
+            .action-grid { grid-template-columns: 1fr; }
+            .progress-bar { flex-wrap: wrap; gap: 10px; }
+            .status-timeline { flex-direction: column; gap: 10px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <div class="header">
             <h1>🚨 Security Incident Response</h1>
-            <p>Advanced SOC Incident Documentation & Response Template</p>
+            <p>Advanced SOC Incident Documentation &amp; Response Template</p>
             <div class="incident-id-display" id="incidentIdDisplay">
                 Incident ID: INC-2024-001
             </div>
         </div>
 
-        <!-- Progress Tracker -->
         <div class="progress-container">
             <div class="progress-bar">
                 <div class="progress-step">
@@ -565,7 +497,6 @@
         </div>
 
         <form id="incidentForm">
-            <!-- Basic Information -->
             <div class="form-section">
                 <div class="section-header">
                     <div class="section-icon">📋</div>
@@ -577,7 +508,7 @@
                         <input type="text" class="form-input" id="incidentId" readonly>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Date & Time</label>
+                        <label class="form-label">Date &amp; Time</label>
                         <input type="datetime-local" class="form-input" id="datetime" required>
                     </div>
                     <div class="form-group">
@@ -591,7 +522,6 @@
                 </div>
             </div>
 
-            <!-- Incident Details -->
             <div class="form-section">
                 <div class="section-header">
                     <div class="section-icon">🎯</div>
@@ -627,7 +557,7 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="form-label">Severity Level</label>
                     <div class="severity-grid">
@@ -669,11 +599,10 @@
                 </div>
             </div>
 
-            <!-- Analysis & Investigation -->
             <div class="form-section">
                 <div class="section-header">
                     <div class="section-icon">🔍</div>
-                    <h3 class="section-title">Analysis & Investigation</h3>
+                    <h3 class="section-title">Analysis &amp; Investigation</h3>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Initial Findings</label>
@@ -691,11 +620,10 @@
                 </div>
             </div>
 
-            <!-- Response Actions -->
             <div class="form-section">
                 <div class="section-header">
                     <div class="section-icon">⚡</div>
-                    <h3 class="section-title">Response & Mitigation</h3>
+                    <h3 class="section-title">Response &amp; Mitigation</h3>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Immediate Actions Taken</label>
@@ -718,11 +646,10 @@
                 </div>
             </div>
 
-            <!-- Status & Timeline -->
             <div class="form-section">
                 <div class="section-header">
                     <div class="section-icon">📊</div>
-                    <h3 class="section-title">Status & Progress</h3>
+                    <h3 class="section-title">Status &amp; Progress</h3>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Current Status</label>
@@ -743,7 +670,7 @@
                             <div style="font-size: 0.9rem;">Case Closed</div>
                         </div>
                     </div>
-                    <input type="hidden" id="status" name="status" required>
+                    <input type="hidden" id="status" name="status">
                 </div>
 
                 <div class="form-group">
@@ -752,7 +679,6 @@
                 </div>
             </div>
 
-            <!-- Lessons Learned -->
             <div class="form-section">
                 <div class="section-header">
                     <div class="section-icon">📚</div>
@@ -774,7 +700,6 @@
                 </div>
             </div>
 
-            <!-- Action Buttons -->
             <div class="action-grid">
                 <button type="button" class="btn btn-primary" onclick="generateSummary()">
                     📝 Generate Summary
@@ -797,7 +722,6 @@
             </div>
         </form>
 
-        <!-- Summary Card -->
         <div class="summary-card" id="summaryCard">
             <div class="summary-header">
                 <div class="section-icon">📋</div>
@@ -812,7 +736,7 @@
         let selectedStatus = '';
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function () {
             generateIncidentId();
             setCurrentDateTime();
             updateProgress();
@@ -820,30 +744,38 @@
 
         // Generate unique incident ID
         function generateIncidentId() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const randomNum = Math.floor(Math.random() * 9999) + 1;
-            const incidentId = `INC-${year}-${month}-${randomNum.toString().padStart(4, '0')}`;
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = String(now.getMonth() + 1).padStart(2, '0');
+            var randomNum = Math.floor(Math.random() * 9999) + 1;
+            var incidentId = 'INC-' + year + '-' + month + '-' + randomNum.toString().padStart(4, '0');
 
-            document.getElementById('incidentId').value = incidentId;
-            const idDisplay = document.getElementById('incidentIdDisplay');
-            if (idDisplay) idDisplay.textContent = `Incident ID: ${incidentId}`;
+            var incidentInput = document.getElementById('incidentId');
+            if (incidentInput) {
+                incidentInput.value = incidentId;
+            }
+
+            var idDisplay = document.getElementById('incidentIdDisplay');
+            if (idDisplay) {
+                idDisplay.textContent = 'Incident ID: ' + incidentId;
+            }
         }
 
         // Set current date-time in local timezone for input[type="datetime-local"]
         function setCurrentDateTime() {
-            const now = new Date();
-            const tzOffsetMs = now.getTimezoneOffset() * 60000;
-            const localISO = new Date(now.getTime() - tzOffsetMs).toISOString().slice(0, 16);
-            const input = document.getElementById('datetime');
-            if (input) input.value = localISO;
+            var now = new Date();
+            var tzOffsetMs = now.getTimezoneOffset() * 60000;
+            var localISO = new Date(now.getTime() - tzOffsetMs).toISOString().slice(0, 16);
+            var input = document.getElementById('datetime');
+            if (input) {
+                input.value = localISO;
+            }
         }
 
         // Update progress UI
         function updateProgress() {
-            for (let i = 1; i <= 5; i++) {
-                const circle = document.getElementById(`step${i}`);
+            for (var i = 1; i <= 5; i++) {
+                var circle = document.getElementById('step' + i);
                 if (!circle) continue;
                 circle.classList.remove('active', 'completed');
                 if (i < currentStep) circle.classList.add('completed');
@@ -854,133 +786,175 @@
         // Status selection
         function selectStatus(status) {
             selectedStatus = status;
-            const map = { open: 'status-open', 'in-progress': 'status-progress', resolved: 'status-resolved' };
-            document.querySelectorAll('.status-item').forEach(el => el.classList.remove('selected'));
-            const el = document.querySelector(`.${map[status]}`);
-            if (el) el.classList.add('selected');
-            const statusInput = document.getElementById('status');
-            if (statusInput) statusInput.value = status;
+            var map = {
+                open: 'status-open',
+                'in-progress': 'status-progress',
+                resolved: 'status-resolved'
+            };
+
+            var items = document.querySelectorAll('.status-item');
+            for (var i = 0; i < items.length; i++) {
+                items[i].classList.remove('selected');
+            }
+
+            var className = map[status];
+            if (className) {
+                var el = document.querySelector('.' + className);
+                if (el) {
+                    el.classList.add('selected');
+                }
+            }
+
+            var statusInput = document.getElementById('status');
+            if (statusInput) {
+                statusInput.value = status;
+            }
         }
 
         // Validation helpers
         function isFormValid() {
-            const form = document.getElementById('incidentForm');
-            const valid = form.checkValidity();
-            if (!valid) form.reportValidity();
-            return valid;
+            var form = document.getElementById('incidentForm');
+            if (!form) return false;
+
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return false;
+            }
+
+            var statusInput = document.getElementById('status');
+            if (!statusInput || !statusInput.value) {
+                alert('Please select the current status (Open, In Progress, or Resolved).');
+                return false;
+            }
+
+            return true;
         }
 
         function validateForm() {
-            const valid = isFormValid();
-            if (valid) alert('All required fields look good.');
+            var valid = isFormValid();
+            if (valid) {
+                alert('All required fields look good.');
+            }
             return valid;
         }
 
         // Gather data
+        function getFieldValue(id) {
+            var el = document.getElementById(id);
+            if (!el || typeof el.value !== 'string') return '';
+            return el.value.trim();
+        }
+
         function getFormData() {
-            const get = id => document.getElementById(id)?.value?.trim() || '';
-            const severity = document.querySelector('input[name="severity"]:checked')?.value || '';
+            var severityEl = document.querySelector('input[name="severity"]:checked');
+            var severity = severityEl ? severityEl.value : '';
+
             return {
-                incidentId: get('incidentId'),
-                datetime: get('datetime'),
-                reportedBy: get('reportedBy'),
-                analyst: get('analyst'),
-                incidentType: get('incidentType'),
-                attackVector: get('attackVector'),
-                severity,
-                affectedSystems: get('affectedSystems'),
-                description: get('description'),
-                findings: get('findings'),
-                evidence: get('evidence'),
-                iocs: get('iocs'),
-                immediateActions: get('immediateActions'),
-                containment: get('containment'),
-                eradication: get('eradication'),
-                recovery: get('recovery'),
-                status: get('status'),
-                nextSteps: get('nextSteps'),
-                wentWell: get('wentWell'),
-                improvements: get('improvements'),
-                recommendations: get('recommendations'),
+                incidentId: getFieldValue('incidentId'),
+                datetime: getFieldValue('datetime'),
+                reportedBy: getFieldValue('reportedBy'),
+                analyst: getFieldValue('analyst'),
+                incidentType: getFieldValue('incidentType'),
+                attackVector: getFieldValue('attackVector'),
+                severity: severity,
+                affectedSystems: getFieldValue('affectedSystems'),
+                description: getFieldValue('description'),
+                findings: getFieldValue('findings'),
+                evidence: getFieldValue('evidence'),
+                iocs: getFieldValue('iocs'),
+                immediateActions: getFieldValue('immediateActions'),
+                containment: getFieldValue('containment'),
+                eradication: getFieldValue('eradication'),
+                recovery: getFieldValue('recovery'),
+                status: getFieldValue('status'),
+                nextSteps: getFieldValue('nextSteps'),
+                wentWell: getFieldValue('wentWell'),
+                improvements: getFieldValue('improvements'),
+                recommendations: getFieldValue('recommendations')
             };
         }
 
         // Build summary text
         function buildSummary(d) {
             return (
-`Incident ID: ${d.incidentId}
-Date & Time: ${d.datetime}
-Reported By: ${d.reportedBy}
-SOC Analyst: ${d.analyst}
-Status: ${d.status}
+                'Incident ID: ' + d.incidentId + '\n' +
+                'Date & Time: ' + d.datetime + '\n' +
+                'Reported By: ' + d.reportedBy + '\n' +
+                'SOC Analyst: ' + d.analyst + '\n' +
+                'Status: ' + d.status + '\n\n' +
 
-Incident Classification
-- Type: ${d.incidentType}
-- Attack Vector: ${d.attackVector}
-- Severity: ${d.severity}
-- Affected: ${d.affectedSystems}
+                'Incident Classification\n' +
+                '- Type: ' + d.incidentType + '\n' +
+                '- Attack Vector: ' + d.attackVector + '\n' +
+                '- Severity: ' + d.severity + '\n' +
+                '- Affected: ' + d.affectedSystems + '\n\n' +
 
-Description
-${d.description}
+                'Description\n' +
+                d.description + '\n\n' +
 
-Analysis & Investigation
-- Findings:
-${d.findings}
+                'Analysis & Investigation\n' +
+                '- Findings:\n' +
+                d.findings + '\n\n' +
 
-- Evidence:
-${d.evidence}
+                '- Evidence:\n' +
+                d.evidence + '\n\n' +
 
-- IOCs:
-${d.iocs}
+                '- IOCs:\n' +
+                d.iocs + '\n\n' +
 
-Response & Mitigation
-- Immediate Actions:
-${d.immediateActions}
+                'Response & Mitigation\n' +
+                '- Immediate Actions:\n' +
+                d.immediateActions + '\n\n' +
 
-- Containment:
-${d.containment}
+                '- Containment:\n' +
+                d.containment + '\n\n' +
 
-- Eradication:
-${d.eradication}
+                '- Eradication:\n' +
+                d.eradication + '\n\n' +
 
-- Recovery:
-${d.recovery}
+                '- Recovery:\n' +
+                d.recovery + '\n\n' +
 
-Next Steps
-${d.nextSteps}
+                'Next Steps\n' +
+                d.nextSteps + '\n\n' +
 
-Post-Incident Review
-- What Went Well:
-${d.wentWell}
+                'Post-Incident Review\n' +
+                '- What Went Well:\n' +
+                d.wentWell + '\n\n' +
 
-- Improvements:
-${d.improvements}
+                '- Improvements:\n' +
+                d.improvements + '\n\n' +
 
-- Recommendations:
-${d.recommendations}`
+                '- Recommendations:\n' +
+                d.recommendations
             );
         }
 
         // Actions
         function generateSummary() {
             if (!isFormValid()) return;
-            const data = getFormData();
-            const summary = buildSummary(data);
-            const contentEl = document.getElementById('summaryContent');
-            const cardEl = document.getElementById('summaryCard');
-            if (contentEl) contentEl.textContent = summary;
-            if (cardEl) cardEl.classList.add('show');
-            cardEl?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            var data = getFormData();
+            var summary = buildSummary(data);
+            var contentEl = document.getElementById('summaryContent');
+            var cardEl = document.getElementById('summaryCard');
+
+            if (contentEl) {
+                contentEl.textContent = summary;
+            }
+            if (cardEl) {
+                cardEl.classList.add('show');
+                cardEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
 
         function exportReport() {
             if (!isFormValid()) return;
-            const data = getFormData();
-            const text = buildSummary(data) + '\n\n---\nJSON\n' + JSON.stringify(data, null, 2);
-            const filename = `${data.incidentId || 'incident-report'}.txt`;
-            const blob = new Blob([text], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
+            var data = getFormData();
+            var text = buildSummary(data) + '\n\n---\nJSON\n' + JSON.stringify(data, null, 2);
+            var filename = (data.incidentId || 'incident-report') + '.txt';
+            var blob = new Blob([text], { type: 'text/plain' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
             a.href = url;
             a.download = filename;
             document.body.appendChild(a);
@@ -990,13 +964,19 @@ ${d.recommendations}`
         }
 
         function saveTemplate() {
-            const data = getFormData();
-            localStorage.setItem('incidentFormDraft', JSON.stringify(data));
-            alert('Draft saved locally in this browser.');
+            try {
+                var data = getFormData();
+                localStorage.setItem('incidentFormDraft', JSON.stringify(data));
+                alert('Draft saved locally in this browser.');
+            } catch (e) {
+                console.error(e);
+                alert('Unable to save draft in this browser (localStorage issue).');
+            }
         }
 
         function printReport() {
-            if (!document.getElementById('summaryCard')?.classList.contains('show')) {
+            var summaryCard = document.getElementById('summaryCard');
+            if (!summaryCard || !summaryCard.classList.contains('show')) {
                 if (!isFormValid()) return;
                 generateSummary();
             }
@@ -1005,16 +985,28 @@ ${d.recommendations}`
 
         function clearForm() {
             if (!confirm('Clear all fields and start a new report?')) return;
-            document.getElementById('incidentForm').reset();
-            document.getElementById('status').value = '';
-            document.querySelectorAll('.status-item').forEach(el => el.classList.remove('selected'));
-            document.getElementById('summaryCard').classList.remove('show');
-            document.getElementById('summaryContent').textContent = '';
+
+            var form = document.getElementById('incidentForm');
+            if (form) form.reset();
+
+            var statusInput = document.getElementById('status');
+            if (statusInput) statusInput.value = '';
+
+            var items = document.querySelectorAll('.status-item');
+            for (var i = 0; i < items.length; i++) {
+                items[i].classList.remove('selected');
+            }
+
+            var summaryCard = document.getElementById('summaryCard');
+            var summaryContent = document.getElementById('summaryContent');
+            if (summaryCard) summaryCard.classList.remove('show');
+            if (summaryContent) summaryContent.textContent = '';
+
             currentStep = 1;
             updateProgress();
             generateIncidentId();
             setCurrentDateTime();
         }
     </script>
-  </body>
+</body>
 </html>
